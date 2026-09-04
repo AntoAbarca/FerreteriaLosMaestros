@@ -87,19 +87,22 @@ document.addEventListener("DOMContentLoaded", () => {
             nombre: "Antonia Abarca",
             usuario: "aabarca",
             rol: "Administrador",
-            estado: "Activo"
+            estado: "Activo",
+            password: "1234"
         },
         {
             nombre: "Diego Garrido",
             usuario: "dgarrid",
             rol: "Vendedor",
-            estado: "Activo"
+            estado: "Activo",
+            password: "1234"
         },
         {
             nombre: "Matias Duncker",
             usuario: "mduncker",
             rol: "Contratista",
-            estado: "Activo"
+            estado: "Activo",
+            password: "1234"
         }
     ];
 
@@ -108,6 +111,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let productos = cargar("admin_productos", productosIniciales);
     let cuentas = cargar("admin_cuentas", cuentasIniciales);
     let usuarios = cargar("admin_usuarios", usuariosIniciales);
+
+    usuarios = usuarios.map(usuario => {
+    if (!usuario.password) {
+        usuario.password = "1234";
+    }
+
+    return usuario;
+    });
+
+    guardar("admin_usuarios", usuarios);
 
     const tablaStock =
         document.getElementById("tablaStockAdmin");
@@ -466,8 +479,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     document
                         .getElementById("nuevoRol")
                         .value;
+                const password =
+                    document
+                        .getElementById("nuevoPassword")
+                        .value;
                 //validar campos
-                if (!nombre || !usuario || !rol) {
+                if (!nombre || !usuario || !rol || !password) {
 
                     mostrarAlerta(
                         "Completa todos los campos obligatorios.",
@@ -507,7 +524,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     nombre: nombre,
                     usuario: usuarioNormalizado,
                     rol: rol,
-                    estado: "Activo"
+                    estado: "Activo",
+                    password: password
                 });
 
 
