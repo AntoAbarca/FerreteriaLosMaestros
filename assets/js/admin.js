@@ -4,14 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             codigo: "FER-001",
             producto: "Martillo Profesional",
-            categoria: "Herramientas",
+            categoria: "Herramientas Manuales",
             stock: 15,
             minimo: 10
         },
         {
             codigo: "FER-002",
             producto: "Juego de Destornilladores",
-            categoria: "Herramientas",
+            categoria: "Herramientas Manuales",
             stock: 20,
             minimo: 8
         },
@@ -52,10 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             codigo: "FER-008",
-            producto: "Casco de seguridad",
-            categoria: "Seguridad",
-            stock: 9,
-            minimo: 5
+            producto: "Alicate Profesional",
+            categoria: "Herramientas Manuales",
+            stock: 0,
+            minimo: 10
         }
     ];
 
