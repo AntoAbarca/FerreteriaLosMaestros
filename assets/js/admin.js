@@ -40,21 +40,21 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-006",
             producto: "Cemento 25 Kg",
             categoria: "Materiales de Construccion",
-            stock: 12,
+            stock: 50,
             minimo: 6
         },
         {
             codigo: "FER-007",
             producto: "Guantes de trabajo",
             categoria: "Seguridad",
-            stock: 20,
+            stock: 30,
             minimo: 10
         },
         {
             codigo: "FER-008",
             producto: "Alicate Profesional",
             categoria: "Herramientas Manuales",
-            stock: 0,
+            stock: 12,
             minimo: 10
         }
     ];
