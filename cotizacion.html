@@ -41,5 +41,120 @@
             </div>
         </header>
 
+        <main>
+            <!-- Sección de Contacto y Solicitud de Cotización -->
+            <section id="contacto-seccion" class="py-5" aria-labelledby="contactoTitle">
+                <div class="container-fluid px-lg-5">
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-12 col-lg-8">
+                            <div class="form-card shadow-sm">
+                            <div class="text-center mb-4">
+                                <span class="badge bg-warning text-dark fw-bold text-uppercase px-3 py-1 mb-2">Atención Inmediata</span>
+                                <h2 class="h3 fw-bold" id="contactoTitle">Formulario de Contacto y Solicitud de Cotización</h2>
+                                <p class="text-muted small mb-0">
+                                Completa los datos requeridos para que un ejecutivo de ventas te envíe una cotización formal con disponibilidad y precio por encargo.
+                                </p>
+                            </div>
+
+
+                        <!-- Contenedor para resultado de envío -->
+                        <div id="quoteResultCard" class="mb-4 d-none" role="region" aria-live="polite"></div>
+
+
+                        <!-- Formulario -->
+                        <form id="contactForm" novalidate>
+                            <div class="row g-3">
+                            <!-- Nombre Completo -->
+                            <div class="col-12 col-md-6">
+                                <label for="contactNombre" class="form-label">
+                                Nombre Completo <span class="req">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="contactNombre" name="nombre" placeholder="Ej: Matías Duncker." required minlength="3" data-name="Nombre Completo">
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+
+                            <!-- RUT o Empresa -->
+                            <div class="col-12 col-md-6">
+                                <label for="contactRut" class="form-label">
+                                RUT Personal o Empresa <span class="req">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="contactRut" name="rut" placeholder="Ej: 12.345.678-9" required data-type="rut" data-name="RUT">
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+
+                            <!-- Correo Electrónico -->
+                            <div class="col-12 col-md-6">
+                                <label for="contactEmail" class="form-label">
+                                Correo Electrónico <span class="req">*</span>
+                                </label>
+                                <input type="email" class="form-control" id="contactEmail" name="email" placeholder="ejemplo@constructora.cl" required data-name="Correo Electrónico">
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+
+                            <!-- Teléfono -->
+                            <div class="col-12 col-md-6">
+                                <label for="contactTelefono" class="form-label">
+                                Teléfono o WhatsApp <span class="req">*</span>
+                                </label>
+                                <input type="tel" class="form-control" id="contactTelefono" name="telefono" placeholder="+56 9 1234 5678" required data-name="Teléfono">
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+
+                            <!-- Tipo de Cliente -->
+                            <div class="col-12 col-md-6">
+                                <label for="contactTipoCliente" class="form-label">
+                                Tipo de Cliente <span class="req">*</span>
+                                </label>
+                                <select class="form-select" id="contactTipoCliente" name="tipoCliente" required data-name="Tipo de Cliente">
+                                <option value="">-- Selecciona tu perfil --</option>
+                                <option value="Particular / Hogar">Particular / Proyecto Hogar</option>
+                                <option value="Maestro Independiente">Maestro Independiente / Especialista</option>
+                                <option value="Empresa Contratista">Empresa Contratista / Constructora</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+
+                            <!-- Comuna de Entrega -->
+                            <div class="col-12 col-md-6">
+                                <label for="contactComuna" class="form-label">
+                                Comuna o Dirección de Obra <span class="req">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="contactComuna" name="comuna" placeholder="Ej: Coquimbo, La Serena" required data-name="Comuna de Obra">
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+
+                            <!-- Mensaje o Detalle de Materiales -->
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="contactMensaje" class="form-label mb-0">
+                                    Detalle de Materiales a Cotizar <span class="req">*</span>
+                                </label>
+                                </div>
+                                <textarea class="form-control font-monospace small" id="contactMensaje" name="mensaje" rows="4" placeholder="Indica cantidades, especificaciones técnicas o códigos requeridos (Ej: 23 sacos de cemento Polpaico 25kg, 3 destornillador...)" required minlength="10" data-name="Detalle de Materiales"></textarea>
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+
+                            <!-- Botón Enviar -->
+                            <div class="col-12 text-end pt-2">
+                                <button type="submit" class="btn btn-primary btn-lg fw-bold px-5" id="submitContactBtn">
+                                <i class="bi bi-send me-2"></i> Enviar Solicitud de Cotización
+                                </button>
+                            </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
     </body>
 </html>
