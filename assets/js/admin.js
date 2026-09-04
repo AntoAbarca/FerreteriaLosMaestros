@@ -105,9 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
 
-    // =========================
-    // CARGAR DATOS
-    // =========================
+//carga de datos
 
     let productos = cargar("admin_productos", productosIniciales);
     let cuentas = cargar("admin_cuentas", cuentasIniciales);
