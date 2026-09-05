@@ -48,13 +48,11 @@
                     </div>
                     <div class="card-body">
                         <!-- Agregar producto al ticket -->
-                        <form action="#" method="POST" class="row g-2 mb-3 align-items-end">
+                            <form id="formVenta" class="row g-2 mb-3 align-items-end">
                             <div class="col-12 col-md-5">
                                 <label for="selectProductoVenta" class="form-label small">Seleccionar Producto <span class="req">*</span></label>
                                 <select class="form-select form-select-sm" id="selectProductoVenta" required>
                                 <option value="">-- Seleccionar Producto --</option>
-                                <option value="1">Taladro Percutor 750W</option>
-                                <option value="2">Set de Destornilladores</option>
                                 </select>
                             </div>
 
@@ -90,16 +88,7 @@
                                         <th class="text-center">Quitar</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Taladro Percutor 750W</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-end">$45.990</td>
-                                        <td class="text-end">$45.990</td>
-                                        <td class="text-center">
-                                        <button type="button" class="btn btn-outline-danger btn-sm py-0 px-1"><i class="bi bi-trash"></i></button>
-                                        </td>
-                                    </tr>
+                                <tbody id = "detalleVenta">
                                 </tbody>
                             </table>
                         </div>
@@ -109,15 +98,15 @@
 
                             <div class="d-flex justify-content-between mb-1 small text-muted">
                                 <span>Subtotal Neto:</span>
-                                <span>$38.647</span>
+                                <span id="subtotalNeto">$0</span>
                             </div>
                             <div class="d-flex justify-content-between mb-1 small text-muted">
                                 <span>IVA (19%):</span>
-                                <span>$7.343</span>
+                                <span id="ivaVenta">$0</span>
                             </div>
                             <div class="d-flex justify-content-between mb-3 fs-5 fw-bold text-dark border-top pt-1">
                                 <span>Total a Cobrar:</span>
-                                <span class="text-primary">$45.990</span>
+                                <span class="text-primary" id="totalVenta">$0</span>
                             </div>
 
                             <div class="row g-2 align-items-center">
@@ -130,8 +119,8 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <button type="submit" class="btn btn-success btn-sm w-100 fw-bold">
-                                        <i class="bi bi-printer me-1"></i> Cobrar y Emitir Boleta
+                                    <button type="button" id="btnCobrarVenta" class="btn btn-success btn-sm w-100 fw-bold"><i class="bi bi-printer me-1"></i>
+                                        Cobrar y Emitir Boleta
                                     </button>
                                 </div>
                             </div>
@@ -157,8 +146,7 @@
                             <th class="text-end">Cambiar a</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <!-- Ejemplo de fila estática para previsualizar el diseño -->
+                        <tbody id="tablaPedidos">
                         <tr>
                             <td>
                             <span class="fw-bold">#1001</span><br>
@@ -178,7 +166,7 @@
                     </table>
                     </div>
                 </div>
-                <div class="card-footer bg-light small text-muted"> ** Cambia el selector para actualizar el estado del pedido.</div>
+                <div class="card-footer bg-light small text-muted"> * Cambia el selector para actualizar el estado del pedido.</div>
                 </div>
             </div>
         </div>

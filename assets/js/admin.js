@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-001",
             producto: "Martillo Profesional",
             categoria: "Herramientas Manuales",
+            precio: 12990,
             stock: 15,
             minimo: 10
         },
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-002",
             producto: "Juego de Destornilladores",
             categoria: "Herramientas Manuales",
+            precio: 9990,
             stock: 20,
             minimo: 8
         },
@@ -19,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-003",
             producto: "Taladro eléctrico",
             categoria: "Herramientas eléctricas",
+            precio: 49990,
             stock: 8,
             minimo: 10
         },
@@ -26,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-004",
             producto: "Sierra circular",
             categoria: "Herramientas eléctricas",
+            precio: 69990,
             stock: 6,
             minimo: 5
         },
@@ -33,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-005",
             producto: "Cinta métrica 5m",
             categoria: "Medición",
+            precio: 4990,
             stock: 18,
             minimo: 10
         },
@@ -40,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-006",
             producto: "Cemento 25 Kg",
             categoria: "Materiales de Construccion",
+            precio: 5990,
             stock: 50,
             minimo: 6
         },
@@ -47,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-007",
             producto: "Guantes de trabajo",
             categoria: "Seguridad",
+            precio: 3490,
             stock: 30,
             minimo: 10
         },
@@ -54,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
             codigo: "FER-008",
             producto: "Alicate Profesional",
             categoria: "Herramientas Manuales",
+            precio: 7990,
             stock: 12,
             minimo: 10
         }
@@ -109,6 +117,17 @@ document.addEventListener("DOMContentLoaded", () => {
     //cargar datos
 
     let productos = cargar("admin_productos", productosIniciales);
+
+    productos = productos.map(producto => {
+    const productoInicial = productosIniciales.find(p => p.codigo === producto.codigo);
+
+    if (productoInicial && !producto.precio) {
+        producto.precio = productoInicial.precio;
+    }
+    return producto;
+    });
+    guardar("admin_productos", productos); 
+
     let cuentas = cargar("admin_cuentas", cuentasIniciales);
     let usuarios = cargar("admin_usuarios", usuariosIniciales);
 
@@ -128,7 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const formUsuario = document.getElementById("formNuevoUsuario");
 
     //funciones auxiliares
-
     function cargar(clave, valorInicial) {
 
         try {
@@ -157,8 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     function mostrarAlerta(mensaje, tipo = "success") {
-        const contenedor =
-            document.getElementById("alertaAdmin");
+        const contenedor = document.getElementById("alertaAdmin");
         if (!contenedor) return;
 
 
@@ -176,8 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //elimina la alerta después de unos segundos
         setTimeout(() => {
-            const alerta =
-                contenedor.querySelector(".alert");
+            const alerta = contenedor.querySelector(".alert");
             if (alerta) {
                 alerta.remove();
             }
@@ -199,8 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaStock.innerHTML = "";
 
         productos.forEach((p, indice) => {
-            const critico =
-                p.stock <= p.minimo;
+            const critico = p.stock <= p.minimo;
             const estado =
                 critico
                     ? "Stock crítico"
@@ -242,28 +257,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="btn btn-sm btn-outline-danger fw-bold" data-accion="quitar-stock" data-indice="${indice}" title="Quitar unidades">
                     <i class="bi bi-dash-lg"></i>
                     </button>
-
                 </div>
             </td>
             `;
-
             tablaStock.appendChild(fila);
-
         });
         actualizarKPIs();
     }
 
-
     //cuentas corrientes
-
     function renderizarCuentas() {
 
         if (!tablaCuentas) return;
         tablaCuentas.innerHTML = "";
         cuentas.forEach((cuenta, indice) => {
 
-            const sobreLimite =
-                cuenta.deuda >= cuenta.credito;
+            const sobreLimite = cuenta.deuda >= cuenta.credito;
             const estado =
                 sobreLimite
                     ? "Crédito agotado"
@@ -272,8 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 sobreLimite
                     ? "bg-danger"
                     : "bg-success";
-            const fila =
-                document.createElement("tr");
+            const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>
                     <strong>
@@ -304,21 +312,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     </button>
                 </td>
             `;
-
             tablaCuentas.appendChild(fila);
-
         });
         actualizarKPIs();
     }
 
     //usuarios
-
     function renderizarUsuarios() {
         if (!tablaUsuarios) return;
         tablaUsuarios.innerHTML = "";
         usuarios.forEach(usuario => {
-            const fila =
-                document.createElement("tr");
+            const fila = document.createElement("tr");
             fila.innerHTML = `
                 <td>
                     ${usuario.nombre}
@@ -339,46 +343,29 @@ document.addEventListener("DOMContentLoaded", () => {
                     </span>
                 </td>
             `;
-
             tablaUsuarios.appendChild(fila);
-
         });
-
         actualizarKPIs();
     }
 
     //actualizar kpi
-
     function actualizarKPIs() {
 
-        const totalProductos =
-            document.getElementById(
-                "kpiTotalProductos"
-            );
-        const stockCritico =
-            document.getElementById(
-                "kpiStockCritico"
-            );
+        const totalProductos =document.getElementById("kpiTotalProductos");
+        const stockCritico = document.getElementById("kpiStockCritico");
         if (totalProductos) {
-
-            totalProductos.textContent =
-                productos.length;
+            totalProductos.textContent = productos.length;
         }
         if (stockCritico) {
-            stockCritico.textContent =
-                productos.filter(
-                    p => p.stock <= p.minimo
-                ).length;
+            stockCritico.textContent = productos.filter(p => p.stock <= p.minimo).length;
         }
     }
 
     // modificar stock
-
         if (tablaStock) {
             tablaStock.addEventListener(
                 "click", event => {
-                    const boton =
-                        event.target.closest('[data-accion="agregar-stock"], [data-accion="quitar-stock"]');
+                    const boton = event.target.closest('[data-accion="agregar-stock"], [data-accion="quitar-stock"]');
 
                     if (!boton) return;
 
@@ -453,30 +440,16 @@ document.addEventListener("DOMContentLoaded", () => {
         tablaCuentas.addEventListener(
             "click",
             event => {
-                const boton =
-                    event.target.closest(
-                        '[data-accion="abonar"]'
-                    );
+                const boton = event.target.closest('[data-accion="abonar"]');
                 if (!boton) return;
-                const indice =
-                    Number(
-                        boton.dataset.indice
-                    );
-                const cuenta =
-                    cuentas[indice];
+                const indice =Number(boton.dataset.indice);
+                const cuenta =cuentas[indice];
                 if (!cuenta) return;
                 //no permite abonar más que la deuda
-                const abono =
-                    Math.min(
-                        500000,
-                        cuenta.deuda
-                    );
+                const abono =Math.min(500000,cuenta.deuda);
                 cuenta.deuda -= abono;
 
-                guardar(
-                    "admin_cuentas",
-                    cuentas
-                );
+                guardar("admin_cuentas",cuentas);
 
                 renderizarCuentas();
 
@@ -486,7 +459,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${formatoPesos(abono)}.
                     Deuda restante:
                     <strong>${formatoPesos(cuenta.deuda)}</strong>.`,
-
                     "success"
                 );
             }
@@ -495,11 +467,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     //formulario nuevo usuario
-
     if (formUsuario) {
-        formUsuario.addEventListener(
-            "submit",
-            event => {
+        formUsuario.addEventListener("submit", event => {
                 event.preventDefault();
                 const nombre =
                     document
@@ -519,39 +488,32 @@ document.addEventListener("DOMContentLoaded", () => {
                     document
                         .getElementById("nuevoPassword")
                         .value;
+
                 //validar campos
                 if (!nombre || !usuario || !rol || !password) {
 
-                    mostrarAlerta(
-                        "Completa todos los campos obligatorios.",
-                        "danger"
-                    );
-
+                    mostrarAlerta("Completa todos los campos obligatorios.","danger");
                     return;
                 }
                 const usuarioNormalizado =
                     usuario.toLowerCase();
 
                 // comprobar si el usuario ya existe
-                const existe =
-                    usuarios.some(
+                const existe = usuarios.some(
                         u =>
                             u.usuario.toLowerCase() ===
                             usuarioNormalizado
                     );
 
                 if (existe) {
-
                     mostrarAlerta(
 
                         `El usuario
                         <strong>${usuario}</strong>
                         ya existe.
                         Elige otro nombre de usuario.`,
-
                         "warning"
                     );
-
                     return;
                 }
 
@@ -581,19 +543,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     <strong>${nombre}</strong>
                     agregado correctamente como
                     <strong>${rol}</strong>.`,
-
                     "success"
                 );
-
             }
         );
     }
 
-    //inicializacion
     renderizarProductos();
-
     renderizarCuentas();
-
     renderizarUsuarios();
-
 });
