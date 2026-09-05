@@ -122,16 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     guardar("admin_usuarios", usuarios);
 
-    const tablaStock =
-        document.getElementById("tablaStockAdmin");
-    const tablaCuentas =
-        document.getElementById("tablaCuentasAdmin");
-    const tablaUsuarios =
-        document.getElementById("tablaUsuariosAdmin");
-    const formUsuario =
-        document.getElementById("formNuevoUsuario");
+    const tablaStock = document.getElementById("tablaStockAdmin");
+    const tablaCuentas = document.getElementById("tablaCuentasAdmin");
+    const tablaUsuarios = document.getElementById("tablaUsuariosAdmin");
+    const formUsuario = document.getElementById("formNuevoUsuario");
 
-//funciones auxiliares
+    //funciones auxiliares
 
     function cargar(clave, valorInicial) {
 
@@ -188,7 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3500);
     }
 
-
     function formatoPesos(valor) {
         return new Intl.NumberFormat("es-CL", {
             style: "currency",
@@ -197,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }).format(valor);
     }
 
-//inventario
+    //inventario
 
     function renderizarProductos() {
         if (!tablaStock) return;
@@ -239,14 +234,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     </span>
                 </td>
                 <td class="text-center">
-                    <button
-                        class="btn btn-sm btn-outline-primary fw-bold"
-                        data-accion="reponer"
-                        data-indice="${indice}">
-                        <i class="bi bi-plus-circle me-1"></i>
-                        Reponer (+10 un.)
+                <div class="d-flex gap-1 justify-content-center">           
+                    <input type="number" class="form-control form-control-sm" min="1" value="1" style="width: 75px;" data-cantidad="${indice}">
+                    <button class="btn btn-sm btn-outline-success fw-bold" data-accion="agregar-stock" data-indice="${indice}" title="Agregar unidades">
+                    <i class="bi bi-plus-lg"></i>
                     </button>
-                </td>
+                    <button class="btn btn-sm btn-outline-danger fw-bold" data-accion="quitar-stock" data-indice="${indice}" title="Quitar unidades">
+                    <i class="bi bi-dash-lg"></i>
+                    </button>
+
+                </div>
+            </td>
             `;
 
             tablaStock.appendChild(fila);
@@ -256,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-//cuentas corrientes
+    //cuentas corrientes
 
     function renderizarCuentas() {
 
@@ -313,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarKPIs();
     }
 
-//usuarios
+    //usuarios
 
     function renderizarUsuarios() {
         if (!tablaUsuarios) return;
@@ -349,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarKPIs();
     }
 
-//actualizar kpi
+    //actualizar kpi
 
     function actualizarKPIs() {
 
@@ -374,43 +372,81 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-//boton reponer
+    // modificar stock
 
-    if (tablaStock) {
-        tablaStock.addEventListener(
-            "click",
-            event => {
-                const boton =
-                    event.target.closest(
-                        '[data-accion="reponer"]'
-                    );
-                if (!boton) return;
-                const indice =
-                    Number(
-                        boton.dataset.indice
-                    );
-                const producto =
-                    productos[indice];
-                if (!producto) return;
-                // Agregar 10 unidades
-                producto.stock += 10;
-                guardar(
-                    "admin_productos",
-                    productos
-                );
-                renderizarProductos();
-                mostrarAlerta(
-                    `Se repusieron <strong>10 unidades</strong>
-                    de ${producto.producto}.
-                    Stock actual:
-                    <strong>${producto.stock}</strong>.`,
-                    "success"
-                );
-            }
-        );
-    }
+        if (tablaStock) {
+            tablaStock.addEventListener(
+                "click", event => {
+                    const boton =
+                        event.target.closest('[data-accion="agregar-stock"], [data-accion="quitar-stock"]');
 
-//boton abonar
+                    if (!boton) return;
+
+                    const indice = Number(boton.dataset.indice);
+                    const producto = productos[indice];
+
+                    if (!producto) return;
+                    
+                    const input = tablaStock.querySelector(
+                            `[data-cantidad="${indice}"]`
+                        );
+
+                    const cantidad = Number(input.value);
+
+                    if (!Number.isInteger(cantidad) || cantidad <= 0) {
+                        mostrarAlerta(
+                            "Ingresa una cantidad válida mayor que 0.",
+                            "danger"
+                        );
+                        return;
+                    }
+
+                    const agregar = boton.dataset.accion === "agregar-stock";
+
+                    if (agregar) {
+                        producto.stock += cantidad;
+                        guardar( "admin_productos", productos);
+
+                        renderizarProductos();
+
+                        mostrarAlerta(
+                            `Se agregaron <strong>${cantidad} unidades</strong>
+                            de ${producto.producto}.
+                            Stock actual:
+                            <strong>${producto.stock}</strong>.`,
+                            "success"
+                        );
+
+                    } else {
+                        if (cantidad > producto.stock) {
+                            mostrarAlerta(
+                                `No puedes quitar <strong>${cantidad}</strong>
+                                unidades porque ${producto.producto}
+                                solo tiene <strong>${producto.stock}</strong>.`,
+                                "danger"
+                            );
+                            return;
+                        }
+
+                        producto.stock -= cantidad;
+
+                        guardar("admin_productos", productos);
+
+                        renderizarProductos();
+
+                        mostrarAlerta(
+                            `Se quitaron <strong>${cantidad} unidades</strong>
+                            de ${producto.producto}.
+                            Stock actual:
+                            <strong>${producto.stock}</strong>.`,
+                            "warning"
+                        );
+                    }
+                }
+            );
+        }
+
+    //boton abonar
 
     if (tablaCuentas) {
 
@@ -458,7 +494,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-//formulario nuevo usuario
+    //formulario nuevo usuario
 
     if (formUsuario) {
         formUsuario.addEventListener(
