@@ -1,3 +1,20 @@
+//USUARIO INICIAL, PARA QUE SIEMPRE HAYA UN ADMINISTRADOR
+const USUARIOS_INICIALES = [
+    {
+        nombre: "Administrador",
+        usuario: "admin",
+        rol: "Administrador",
+        estado: "Activo",
+        password: "admin123"
+    }
+];
+
+function inicializarUsuarios() {
+    if (!localStorage.getItem("usuarios")) {
+        localStorage.setItem("usuarios", JSON.stringify(USUARIOS_INICIALES));
+    }
+}
+
 function obtenerSesion() {
     const sesion = localStorage.getItem("sesionActiva");
     if (!sesion) {
