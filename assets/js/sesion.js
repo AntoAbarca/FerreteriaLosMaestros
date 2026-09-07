@@ -88,8 +88,10 @@ function protegerPagina(rolPermitido) {
 //cerrar sesion
 
 document.addEventListener("DOMContentLoaded", () => {
-    inicializarUsuarios()
+    inicializarUsuarios();
+    
     const botonesCerrarSesion = document.querySelectorAll("[data-cerrar-sesion]");
+
     botonesCerrarSesion.forEach(boton => {
         boton.addEventListener("click", event => {
             event.preventDefault();
