@@ -10,8 +10,8 @@ const USUARIOS_INICIALES = [
 ];
 
 function inicializarUsuarios() {
-    if (!localStorage.getItem("usuarios")) {
-        localStorage.setItem("usuarios", JSON.stringify(USUARIOS_INICIALES));
+    if (!localStorage.getItem("admin_usuarios")) {
+        localStorage.setItem("admin_usuarios", JSON.stringify(USUARIOS_INICIALES));
     }
 }
 
@@ -89,7 +89,7 @@ function protegerPagina(rolPermitido) {
 
 document.addEventListener("DOMContentLoaded", () => {
     inicializarUsuarios();
-    
+
     const botonesCerrarSesion = document.querySelectorAll("[data-cerrar-sesion]");
 
     botonesCerrarSesion.forEach(boton => {
